@@ -46,9 +46,9 @@ def display_by_hp(year):
     pass
 def display_max_hp(year):
     num = int(year)
-    hp = c.execute('''SELECT MAX(horsepower) FROM autos_mpg WHERE model_year = ?''',(num,)).fetchall()
-    print(hp)
-    pass
+    hp = c.execute('''SELECT car_name, MAX(horsepower) FROM autos_mpg WHERE model_year = ?''',(num,)).fetchall()
+    return hp
+
 def add_vehicle(mpg,cylinders,displacement,hp,weight,accl,year,origin,model):
     c.execute('''INSERT INTO autos_mpg (mpg,cylinders,displacement,horsepower,weight,acceleration,model_year,origin,car_name) 
     VALUES(?,?,?,?,?,?,?,?,?)''',
@@ -68,6 +68,7 @@ def modify_vehilce(weight, mpg):
     pass
 cont = True
 inp = ''
+inventory = []
 while cont == True:
     print('What would you like to do? Select Action')
     print('Display vehicles by MPG(1)')
@@ -76,6 +77,7 @@ while cont == True:
     print('Add Vehicle(4)')
     print('Delete Vehicle(5)')
     print('Update Vehilce(6)')
+    print('Print Inventory(7)')
     inp = input('Enter Selection: ')
     if inp == '1':
         year = input('Enter Year between 70 and 82: ')
@@ -87,16 +89,38 @@ while cont == True:
 
     if inp == '3':
         year = input('Enter Year between 70 and 82: ')
-        display_max_hp(year)
-
+        print(display_max_hp(year))
+        inp = input("Would you like to store vehicle in your inventory?")
+        if inp == 'y' or inp == 'yes':
+            inventory.append(display_max_hp(year))
     if inp == '4':
         mpg = input('Enter vehicle MPG: ')
+        if mpg >50 or mpg <5:
+            print('NA Try again')
+            break
         cylinders = input('Enter vehicles number of cylinders: ')
+        if cylinders > 12 or cylinders < 4:
+            print('NA Try again')
+            break
         displacement = input('Enter vehicles engine displacement: ')
+        if displacement > 7.5 or displacement < 1:
+            print('NA Try again')
+            break
         hp = input('Enter vehicle horsepower: ')
+        if hp > 1000 or hp < 25:
+            print('NA Try again')
         weight = input('Enter vehicle weight: ')
+        if weight > 10000 or weight < 1000:
+            print('NA Try again')
+            break
         accl = input('Enter vehicle acceleration: ')
+        if accl> 15 or accl < 1:
+            print('NA Try again')
+            break
         year = input('Enter vehicles year: ')
+        if year >2022 or year < 1900:
+            print('NA Try again')
+            break
         origin = 1
         model = input('Enter vehicle model: ')
         add_vehicle(mpg,cylinders,displacement,hp,weight,accl,year,origin,model)
@@ -110,10 +134,15 @@ while cont == True:
     if inp == '6':
         weight = input('Enter vehicle weight: ')
         mpg = input ('Enter new MPG of vehicle: ')
-        weight =int(weight)
+        weight = int(weight)
         modify_vehilce(weight,mpg)
         print('Vehicle modified succesfully')
+    
+    if inp == '7':
+        print(inventory
+        )
     resp = input('continue?: ')
     if resp == 'no' or resp == 'n':
         break
+    
 print('Thank You')
