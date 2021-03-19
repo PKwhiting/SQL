@@ -2,31 +2,34 @@ import sqlite3
 from sqlite3 import Error
 import pandas as pd
 
-
-# def create_connection(db_file):
-#     """ create a database connection to a SQLite database """
-#     conn = None
-#     try:
-#         conn = sqlite3.connect(db_file)
-#         print(sqlite3.version)
-#     except Error as e:
-#         print(e)
-#     finally:
-#         if conn:
-#             conn.close()
-
-
-# if __name__ == '__main__':
-#     create_connection(r"C:\Users\dsxgyy1\Desktop\Main\Language Practice\SQL\SQL\sqlite\db\pythonsqlite.db")
+#creating the db connection
+def create_connection(db_file):
+    """ create a database connection to a SQLite database """
+    conn = None
+    try:
+        conn = sqlite3.connect(db_file)
+        print(sqlite3.version)
+    except Error as e:
+        print(e)
+    finally:
+        if conn:
+            conn.close()
 
 
-# conn = sqlite3.connect('sqlite/db/pythonsqlite.db')
-# c = conn.cursor()
+if __name__ == '__main__':
+    create_connection(r"C:\Users\dsxgyy1\Desktop\Main\Language Practice\SQL\SQL\sqlite\db\pythonsqlite.db")
 
-# # c.execute('''CREATE TABLE autos_mpg (mpg,cylinders,displacement,horsepower,weight,acceleration,model_year,origin,car_name)''')
 
-# vehicles = pd.read_csv('autos_mpg.csv')
-# vehicles.to_sql('autos_mpg', conn, if_exists='append', index = False)
+conn = sqlite3.connect('sqlite/db/pythonsqlite.db')
+c = conn.cursor()
+
+#creating the database
+c.execute('''CREATE TABLE autos_mpg (mpg,cylinders,displacement,horsepower,weight,acceleration,model_year,origin,car_name)''')
+
+#importing the csv file using pandas
+vehicles = pd.read_csv('autos_mpg.csv')
+#pushing the imported csv file into the db
+vehicles.to_sql('autos_mpg', conn, if_exists='append', index = False)
 
 
 
@@ -34,6 +37,7 @@ import pandas as pd
 conn = sqlite3.connect('sqlite/db/pythonsqlite.db')
 c = conn.cursor()
 
+#basic function to query the database with user input
 def display_by_mpg(year):
     num = int(year)
     mpgs = c.execute('''SELECT avg(mpg) FROM autos_mpg WHERE model_year = ? ''',(num,)).fetchall()
@@ -69,6 +73,7 @@ def modify_vehilce(weight, mpg):
 cont = True
 inp = ''
 inventory = []
+#while loop that controls the program
 while cont == True:
     print('What would you like to do? Select Action')
     print('Display vehicles by MPG(1)')
