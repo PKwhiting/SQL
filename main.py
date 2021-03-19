@@ -95,29 +95,29 @@ while cont == True:
             inventory.append(display_max_hp(year))
     if inp == '4':
         mpg = input('Enter vehicle MPG: ')
+        mpg = int(mpg)
         if mpg >50 or mpg <5:
             print('NA Try again')
             break
         cylinders = input('Enter vehicles number of cylinders: ')
+        cylinders = float(cylinders)
         if cylinders > 12 or cylinders < 4:
             print('NA Try again')
             break
         displacement = input('Enter vehicles engine displacement: ')
-        if displacement > 7.5 or displacement < 1:
-            print('NA Try again')
-            break
         hp = input('Enter vehicle horsepower: ')
+        hp = float(hp)
         if hp > 1000 or hp < 25:
             print('NA Try again')
         weight = input('Enter vehicle weight: ')
+        weight= float(weight)
         if weight > 10000 or weight < 1000:
             print('NA Try again')
             break
         accl = input('Enter vehicle acceleration: ')
-        if accl> 15 or accl < 1:
-            print('NA Try again')
-            break
+        accl = float(accl)
         year = input('Enter vehicles year: ')
+        year = int(year)
         if year >2022 or year < 1900:
             print('NA Try again')
             break
